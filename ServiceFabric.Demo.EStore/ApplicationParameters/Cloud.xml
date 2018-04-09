@@ -6,5 +6,6 @@
     <Parameter Name="ServiceFabric.Demo.EStore.ProductService_MinReplicaSetSize" Value="3" />
     <Parameter Name="ServiceFabric.Demo.EStore.ProductService_TargetReplicaSetSize" Value="3" />
     <Parameter Name="ServiceFabric.Demo.EStore.WebAPI_InstanceCount" Value="-1" />
+    <Parameter Name="ASPNETCORE_ENVIRONMENT" Value="Production" />
   </Parameters>
 </Application>

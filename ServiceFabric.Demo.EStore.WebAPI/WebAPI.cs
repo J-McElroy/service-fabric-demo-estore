@@ -31,7 +31,11 @@ namespace ServiceFabric.Demo.EStore.WebAPI
             return new ServiceInstanceListener[]
             {
                 new ServiceInstanceListener(serviceContext =>
-                    new KestrelCommunicationListener(serviceContext, "ServiceEndpoint", (url, listener) =>
+                {
+                    var config = serviceContext.CodePackageActivationContext.GetConfigurationPackageObject("Config");
+                    var environment = config.Settings.Sections["Environment"].Parameters["ASPNETCORE_ENVIRONMENT"].Value;
+
+                    return new KestrelCommunicationListener(serviceContext, "ServiceEndpoint", (url, listener) =>
                     {
                         ServiceEventSource.Current.ServiceMessage(serviceContext, $"Starting Kestrel on {url}");
 
@@ -43,9 +47,11 @@ namespace ServiceFabric.Demo.EStore.WebAPI
                                     .UseContentRoot(Directory.GetCurrentDirectory())
                                     .UseStartup<Startup>()
                                     .UseServiceFabricIntegration(listener, ServiceFabricIntegrationOptions.None)
+                                    .UseEnvironment(environment)
                                     .UseUrls(url)
                                     .Build();
-                    }))
+                    });
+                })
             };
         }
     }
