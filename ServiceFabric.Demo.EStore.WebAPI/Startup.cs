@@ -12,6 +12,7 @@ using ServiceFabric.Demo.EStore.ProductService.Model;
 using Microsoft.ServiceFabric.Services.Client;
 using System;
 using Newtonsoft.Json.Serialization;
+using ServiceFabric.Demo.EStore.WebAPI.Services;
 
 namespace ServiceFabric.Demo.EStore.WebAPI
 {
@@ -51,6 +52,9 @@ namespace ServiceFabric.Demo.EStore.WebAPI
                 var uriBuilder = new ServiceUriBuilder(ServiceNames.ProductServiceName);
                 return factory.CreateServiceProxy<IProductService>(uriBuilder.ToUri(), new ServicePartitionKey(0));
             });
+
+            // We can easily swtitch to internal implementation
+            // builder.RegisterType<DummyProductService>().As<IProductService>();
 
             builder.Populate(services);
 
