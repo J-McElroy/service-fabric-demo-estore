@@ -10,6 +10,7 @@
     <Parameter Name="CartActorService_MinReplicaSetSize" DefaultValue="3" />
     <Parameter Name="CartActorService_TargetReplicaSetSize" DefaultValue="3" />
     <Parameter Name="ASPNETCORE_ENVIRONMENT" DefaultValue="" />
+    <Parameter Name="DefaultDescription" DefaultValue="DefaultDescription" />
   </Parameters>
   <!-- Import the ServiceManifest from the ServicePackage. The ServiceManifestName and ServiceManifestVersion 
        should match the Name and Version attributes of the ServiceManifest element defined in the 
@@ -20,7 +21,15 @@
   </ServiceManifestImport>
   <ServiceManifestImport>
     <ServiceManifestRef ServiceManifestName="ServiceFabric.Demo.EStore.ProductServicePkg" ServiceManifestVersion="1.0.0" />
-    <ConfigOverrides />
+    <ConfigOverrides>
+      <ConfigOverride Name="Config">
+        <Settings>
+          <Section Name="ProductService">
+            <Parameter Name="DefaultDescription" Value="[DefaultDescription]" />
+          </Section>
+        </Settings>
+      </ConfigOverride>
+    </ConfigOverrides>
   </ServiceManifestImport>
   <ServiceManifestImport>
     <ServiceManifestRef ServiceManifestName="ServiceFabric.Demo.EStore.CartActorPkg" ServiceManifestVersion="1.0.0" />

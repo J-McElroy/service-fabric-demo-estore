@@ -106,6 +106,8 @@
     <Compile Include="ProductService.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="ServiceEventSource.cs" />
+    <Compile Include="Settings\IProductServiceSettings.cs" />
+    <Compile Include="Settings\ProductServiceSettings.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="PackageRoot\Config\Settings.xml" />

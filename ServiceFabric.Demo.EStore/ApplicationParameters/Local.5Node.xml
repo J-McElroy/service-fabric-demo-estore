@@ -8,5 +8,6 @@
     <Parameter Name="ServiceFabric.Demo.EStore.WebAPI_InstanceCount" Value="1" />
     <Parameter Name="CartActorService_PartitionCount" Value="1" />
     <Parameter Name="ASPNETCORE_ENVIRONMENT" Value="Development" />
+    <Parameter Name="DefaultDescription" Value="Default Description on Development" />
   </Parameters>
 </Application>

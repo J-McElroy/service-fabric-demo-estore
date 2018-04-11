@@ -1,16 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Fabric;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.ServiceFabric.Data.Collections;
 using Microsoft.ServiceFabric.Services.Communication.Runtime;
 using Microsoft.ServiceFabric.Services.Runtime;
 using Microsoft.ServiceFabric.Services.Remoting.Runtime;
-using Microsoft.ServiceFabric.Services.Remoting;
 using ServiceFabric.Demo.EStore.ProductService.Model;
 using Microsoft.ServiceFabric.Data;
+using ServiceFabric.Demo.EStore.ProductService.Settings;
 
 namespace ServiceFabric.Demo.EStore.ProductService
 {
@@ -20,13 +19,21 @@ namespace ServiceFabric.Demo.EStore.ProductService
     public class ProductService : StatefulService, IProductService
     {
         private const string productsCollection = "products";
+        private readonly IProductServiceSettings settings;
 
-        public ProductService(StatefulServiceContext context)
+        public ProductService(StatefulServiceContext context, IProductServiceSettings settings)
             : base(context)
-        { }
+        {
+            this.settings = settings;
+        }
 
         public async Task AddProduct(Product product)
         {
+            if (string.IsNullOrEmpty(product.Description))
+            {
+                product.Description = settings.DefaultDescription;
+            }
+
             var products = await StateManager.GetOrAddAsync<IReliableDictionary<Guid, Product>>(productsCollection);
 
             using (var tx = StateManager.CreateTransaction())
