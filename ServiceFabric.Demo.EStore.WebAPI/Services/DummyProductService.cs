@@ -24,10 +24,11 @@ namespace ServiceFabric.Demo.EStore.WebAPI.Services
                 }
             };
 
-        public Task AddProduct(Product product)
+        public Task<Guid> AddProduct(Product product)
         {
+            product.Id = Guid.NewGuid();
             products.Add(product);
-            return Task.FromResult(0);
+            return Task.FromResult(product.Id);
         }
 
         public Task<IEnumerable<Product>> GetAllProducts()

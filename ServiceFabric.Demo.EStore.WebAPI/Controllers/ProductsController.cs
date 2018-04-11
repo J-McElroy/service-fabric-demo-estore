@@ -29,15 +29,11 @@ namespace ServiceFabric.Demo.EStore.WebAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<Guid> Post([FromBody] ApiProduct product)
+        public Task<Guid> Post([FromBody] ApiProduct product)
         {
-            product.Id = Guid.NewGuid();
-
             var newProduct = mapper.Map<Product>(product);
 
-            await productService.AddProduct(newProduct);
-
-            return newProduct.Id; 
+            return productService.AddProduct(newProduct);
         }
     }
 }

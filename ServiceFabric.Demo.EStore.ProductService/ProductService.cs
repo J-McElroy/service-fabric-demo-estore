@@ -27,8 +27,10 @@ namespace ServiceFabric.Demo.EStore.ProductService
             this.settings = settings;
         }
 
-        public async Task AddProduct(Product product)
+        public async Task<Guid> AddProduct(Product product)
         {
+            product.Id = Guid.NewGuid();
+
             if (string.IsNullOrEmpty(product.Description))
             {
                 product.Description = settings.DefaultDescription;
@@ -42,6 +44,8 @@ namespace ServiceFabric.Demo.EStore.ProductService
 
                 await tx.CommitAsync();
             }
+
+            return product.Id;
         }
 
         public async Task<IEnumerable<Product>> GetAllProducts()
