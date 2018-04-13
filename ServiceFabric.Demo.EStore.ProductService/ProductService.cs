@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Fabric;
-using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.ServiceFabric.Data.Collections;
 using Microsoft.ServiceFabric.Services.Communication.Runtime;
 using Microsoft.ServiceFabric.Services.Runtime;
 using Microsoft.ServiceFabric.Services.Remoting.Runtime;
 using ServiceFabric.Demo.EStore.ProductService.Model;
-using Microsoft.ServiceFabric.Data;
 using ServiceFabric.Demo.EStore.ProductService.Settings;
+using ServiceFabric.Demo.EStore.ProductService.Repository;
 
 namespace ServiceFabric.Demo.EStore.ProductService
 {
@@ -18,13 +16,15 @@ namespace ServiceFabric.Demo.EStore.ProductService
     /// </summary>
     public class ProductService : StatefulService, IProductService
     {
-        private const string productsCollection = "products";
         private readonly IProductServiceSettings settings;
+        private readonly IProductRepository repository;
 
         public ProductService(StatefulServiceContext context, IProductServiceSettings settings)
             : base(context)
-        {
+        {            
             this.settings = settings;
+            // TODO: think of a way to inject IReliableStateManager
+            repository = new ProductRepository(StateManager);
         }
 
         public async Task<Guid> AddProduct(Product product)
@@ -36,50 +36,19 @@ namespace ServiceFabric.Demo.EStore.ProductService
                 product.Description = settings.DefaultDescription;
             }
 
-            var products = await StateManager.GetOrAddAsync<IReliableDictionary<Guid, Product>>(productsCollection);
-
-            using (var tx = StateManager.CreateTransaction())
-            {
-                await products.AddOrUpdateAsync(tx, product.Id, product, (id, value) => product);
-
-                await tx.CommitAsync();
-            }
+            await repository.AddProduct(product);
 
             return product.Id;
         }
 
-        public async Task<IEnumerable<Product>> GetAllProducts()
+        public Task<IEnumerable<Product>> GetAllProducts()
         {
-            var products = await StateManager.GetOrAddAsync<IReliableDictionary<Guid, Product>>(productsCollection);
-            var result = new List<Product>();
-
-            using (var tx = StateManager.CreateTransaction())
-            {
-                var allProducts = await products.CreateEnumerableAsync(tx, EnumerationMode.Unordered);
-
-                using (var enumerator = allProducts.GetAsyncEnumerator())
-                {
-                    while (await enumerator.MoveNextAsync(CancellationToken.None))
-                    {
-                        KeyValuePair<Guid, Product> current = enumerator.Current;
-                        result.Add(current.Value);
-                    }
-                }
-            }
-
-            return result;
+            return repository.GetAllProducts();
         }
 
-        public async Task<Product> GetProduct(Guid productId)
+        public Task<Product> GetProduct(Guid productId)
         {
-            var products = await StateManager.GetOrAddAsync<IReliableDictionary<Guid, Product>>(productsCollection);
-
-            using (var tx = StateManager.CreateTransaction())
-            {
-                ConditionalValue<Product> product = await products.TryGetValueAsync(tx, productId);
-
-                return product.HasValue ? product.Value : null;
-            }
+            return repository.GetProduct(productId);
         }
 
         /// <summary>
