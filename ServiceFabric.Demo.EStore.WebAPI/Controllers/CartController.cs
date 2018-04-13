@@ -29,11 +29,12 @@ namespace ServiceFabric.Demo.EStore.WebAPI.Controllers
         }
 
         [HttpPost("{userId}")]
-        public async Task Add(string userId, [FromBody] ApiCartAddRequest request)
+        public async Task<IActionResult> Add(string userId, [FromBody] ApiCartAddRequest request)
         {
             try
             {
                 await orderService.AddToCart(userId, request.ProductId, request.Quantity);
+                return NoContent();
             }
             catch(AggregateException ex)
             {
@@ -41,8 +42,10 @@ namespace ServiceFabric.Demo.EStore.WebAPI.Controllers
 
                 if(exception is ProductNotFoundException)
                 {
-                    // TODO: return appropriate status code
+                    return BadRequest("No such product");
                 }
+
+                throw exception;
             }
         }
 
