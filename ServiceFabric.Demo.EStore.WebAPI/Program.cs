@@ -1,8 +1,8 @@
-﻿using Autofac;
-using Autofac.Integration.ServiceFabric;
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.Threading;
+using Autofac;
+using Autofac.Integration.ServiceFabric;
 
 namespace ServiceFabric.Demo.EStore.WebAPI
 {
@@ -19,7 +19,6 @@ namespace ServiceFabric.Demo.EStore.WebAPI
                 // Registering a service maps a service type name to a .NET type.
                 // When Service Fabric creates an instance of this service type,
                 // an instance of the class is created in this host process.
-
                 var builder = new ContainerBuilder();
 
                 builder.RegisterServiceFabricSupport();
@@ -31,7 +30,7 @@ namespace ServiceFabric.Demo.EStore.WebAPI
                 {
                     // Prevents this host process from terminating so services keep running.
                     Thread.Sleep(Timeout.Infinite);
-                }                
+                }
             }
             catch (Exception e)
             {

@@ -1,7 +1,7 @@
-﻿using ServiceFabric.Demo.EStore.ProductService.Model;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using ServiceFabric.Demo.EStore.ProductService.Model;
 
 namespace ServiceFabric.Demo.EStore.ProductService.Repository
 {

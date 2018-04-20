@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Diagnostics;
-using System.Fabric;
 using System.Threading;
-using System.Threading.Tasks;
-using Microsoft.ServiceFabric.Actors.Runtime;
 using Autofac;
 using Autofac.Integration.ServiceFabric;
+using Microsoft.ServiceFabric.Actors.Runtime;
 
 namespace ServiceFabric.Demo.EStore.CartActor
 {
@@ -22,7 +19,6 @@ namespace ServiceFabric.Demo.EStore.CartActor
                 // The contents of your ServiceManifest.xml and ApplicationManifest.xml files
                 // are automatically populated when you build this project.
                 // For more information, see https://aka.ms/servicefabricactorsplatform
-
                 var builder = new ContainerBuilder();
 
                 builder.RegisterServiceFabricSupport();

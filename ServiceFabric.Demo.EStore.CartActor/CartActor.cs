@@ -8,6 +8,9 @@ using ServiceFabric.Demo.EStore.CartActor.Interfaces;
 
 namespace ServiceFabric.Demo.EStore.CartActor
 {
+    /// <summary>
+    /// This class is an actor that represents user shopping cart
+    /// </summary>
     /// <remarks>
     /// This class represents an actor.
     /// Every ActorID maps to an instance of this class.
@@ -19,11 +22,11 @@ namespace ServiceFabric.Demo.EStore.CartActor
     [StatePersistence(StatePersistence.Persisted)]
     public class CartActor : Actor, ICartActor
     {
-        const string CartItemsStateName = "CartItems";
+        private const string CartItemsStateName = "CartItems";
         private List<CartItem> cartItems = new List<CartItem>();
 
         /// <summary>
-        /// Initializes a new instance of CartActor
+        /// Initializes a new instance of the <see cref="CartActor"/> class.
         /// </summary>
         /// <param name="actorService">The Microsoft.ServiceFabric.Actors.Runtime.ActorService that will host this actor instance.</param>
         /// <param name="actorId">The Microsoft.ServiceFabric.Actors.ActorId for this actor instance.</param>
@@ -63,6 +66,7 @@ namespace ServiceFabric.Demo.EStore.CartActor
         /// This method is called whenever an actor is activated.
         /// An actor is activated the first time any of its methods are invoked.
         /// </summary>
+        /// <returns>Task</returns>
         protected override async Task OnActivateAsync()
         {
             ActorEventSource.Current.ActorMessage(this, "Actor activated.");
@@ -71,18 +75,18 @@ namespace ServiceFabric.Demo.EStore.CartActor
             // Data stored in the StateManager will be replicated for high-availability for actors that use volatile or persisted state storage.
             // Any serializable object can be saved in the StateManager.
             // For more information, see https://aka.ms/servicefabricactorsstateserialization
-
             var state = await StateManager.TryGetStateAsync<List<CartItem>>(CartItemsStateName);
 
-            if(state.HasValue)
+            if (state.HasValue)
             {
                 cartItems = state.Value;
             }
         }
 
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
         protected override async Task OnDeactivateAsync()
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
         {
-
         }
     }
 }

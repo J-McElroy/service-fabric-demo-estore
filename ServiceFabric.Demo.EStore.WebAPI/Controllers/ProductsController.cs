@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using ServiceFabric.Demo.EStore.ProductService.Model;
 using ServiceFabric.Demo.EStore.WebAPI.Model;
-using AutoMapper;
 
 namespace ServiceFabric.Demo.EStore.WebAPI.Controllers
 {

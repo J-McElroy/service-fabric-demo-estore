@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
-using ServiceFabric.Demo.EStore.ProductService.Model;
 using Microsoft.ServiceFabric.Data;
 using Microsoft.ServiceFabric.Data.Collections;
-using System.Threading;
+using ServiceFabric.Demo.EStore.ProductService.Model;
 
 namespace ServiceFabric.Demo.EStore.ProductService.Repository
 {
     internal class ProductRepository : IProductRepository
     {
-        private const string productsCollection = "products";
+        private const string ProductsCollection = "products";
         private readonly IReliableStateManager stateManager;
 
         public ProductRepository(IReliableStateManager stateManager)
@@ -20,7 +20,7 @@ namespace ServiceFabric.Demo.EStore.ProductService.Repository
 
         public async Task AddProduct(Product product)
         {
-            var products = await stateManager.GetOrAddAsync<IReliableDictionary<Guid, Product>>(productsCollection);
+            var products = await stateManager.GetOrAddAsync<IReliableDictionary<Guid, Product>>(ProductsCollection);
 
             using (var tx = stateManager.CreateTransaction())
             {
@@ -32,7 +32,7 @@ namespace ServiceFabric.Demo.EStore.ProductService.Repository
 
         public async Task<IEnumerable<Product>> GetAllProducts()
         {
-            var products = await stateManager.GetOrAddAsync<IReliableDictionary<Guid, Product>>(productsCollection);
+            var products = await stateManager.GetOrAddAsync<IReliableDictionary<Guid, Product>>(ProductsCollection);
             var result = new List<Product>();
 
             using (var tx = stateManager.CreateTransaction())
@@ -54,7 +54,7 @@ namespace ServiceFabric.Demo.EStore.ProductService.Repository
 
         public async Task<Product> GetProduct(Guid productId)
         {
-            var products = await stateManager.GetOrAddAsync<IReliableDictionary<Guid, Product>>(productsCollection);
+            var products = await stateManager.GetOrAddAsync<IReliableDictionary<Guid, Product>>(ProductsCollection);
 
             using (var tx = stateManager.CreateTransaction())
             {

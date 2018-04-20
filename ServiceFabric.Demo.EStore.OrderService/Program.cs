@@ -2,12 +2,12 @@
 using System.Diagnostics;
 using System.Threading;
 using Autofac;
-using Microsoft.ServiceFabric.Services.Remoting.Client;
 using Autofac.Integration.ServiceFabric;
 using Microsoft.ServiceFabric.Actors.Client;
-using ServiceFabric.Demo.EStore.ProductService.Model;
-using ServiceFabric.Demo.EStore.Common;
 using Microsoft.ServiceFabric.Services.Client;
+using Microsoft.ServiceFabric.Services.Remoting.Client;
+using ServiceFabric.Demo.EStore.Common;
+using ServiceFabric.Demo.EStore.ProductService.Model;
 
 namespace ServiceFabric.Demo.EStore.OrderService
 {
@@ -24,7 +24,6 @@ namespace ServiceFabric.Demo.EStore.OrderService
                 // Registering a service maps a service type name to a .NET type.
                 // When Service Fabric creates an instance of this service type,
                 // an instance of the class is created in this host process.
-
                 var builder = new ContainerBuilder();
 
                 builder.RegisterServiceFabricSupport();

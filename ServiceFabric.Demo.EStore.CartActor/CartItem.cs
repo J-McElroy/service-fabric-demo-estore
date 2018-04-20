@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 namespace ServiceFabric.Demo.EStore.CartActor
 {
     [DataContract]
-    class CartItem
+    internal class CartItem
     {
         [DataMember]
         public Guid Id { get; set; }

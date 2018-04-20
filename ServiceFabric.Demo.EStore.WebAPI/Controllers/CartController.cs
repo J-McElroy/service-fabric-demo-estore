@@ -1,10 +1,10 @@
-﻿using AutoMapper;
+﻿using System;
+using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using ServiceFabric.Demo.EStore.OrderService.Model;
 using ServiceFabric.Demo.EStore.OrderService.Model.Exceptions;
 using ServiceFabric.Demo.EStore.WebAPI.Model;
-using System;
-using System.Threading.Tasks;
 
 namespace ServiceFabric.Demo.EStore.WebAPI.Controllers
 {
@@ -36,11 +36,11 @@ namespace ServiceFabric.Demo.EStore.WebAPI.Controllers
                 await orderService.AddToCart(userId, request.ProductId, request.Quantity);
                 return NoContent();
             }
-            catch(AggregateException ex)
+            catch (AggregateException ex)
             {
                 var exception = ex.GetBaseException();
 
-                if(exception is ProductNotFoundException)
+                if (exception is ProductNotFoundException)
                 {
                     return BadRequest("No such product");
                 }

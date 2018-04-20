@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Fabric;
 using System.Threading.Tasks;
 using Microsoft.ServiceFabric.Services.Communication.Runtime;
-using Microsoft.ServiceFabric.Services.Runtime;
 using Microsoft.ServiceFabric.Services.Remoting.Runtime;
+using Microsoft.ServiceFabric.Services.Runtime;
 using ServiceFabric.Demo.EStore.ProductService.Model;
-using ServiceFabric.Demo.EStore.ProductService.Settings;
 using ServiceFabric.Demo.EStore.ProductService.Repository;
+using ServiceFabric.Demo.EStore.ProductService.Settings;
 
 namespace ServiceFabric.Demo.EStore.ProductService
 {
@@ -21,8 +21,9 @@ namespace ServiceFabric.Demo.EStore.ProductService
 
         public ProductService(StatefulServiceContext context, IProductServiceSettings settings)
             : base(context)
-        {            
+        {
             this.settings = settings;
+
             // TODO: think of a way to inject IReliableStateManager
             repository = new ProductRepository(StateManager);
         }

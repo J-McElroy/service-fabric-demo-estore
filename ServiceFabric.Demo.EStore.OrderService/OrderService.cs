@@ -2,17 +2,17 @@
 using System.Collections.Generic;
 using System.Fabric;
 using System.Threading.Tasks;
-using Microsoft.ServiceFabric.Services.Communication.Runtime;
-using Microsoft.ServiceFabric.Services.Runtime;
-using ServiceFabric.Demo.EStore.OrderService.Model;
-using Microsoft.ServiceFabric.Services.Remoting.Runtime;
+using Microsoft.ServiceFabric.Actors;
 using Microsoft.ServiceFabric.Actors.Client;
+using Microsoft.ServiceFabric.Services.Communication.Runtime;
+using Microsoft.ServiceFabric.Services.Remoting.Runtime;
+using Microsoft.ServiceFabric.Services.Runtime;
 using ServiceFabric.Demo.EStore.CartActor.Interfaces;
 using ServiceFabric.Demo.EStore.Common;
-using Microsoft.ServiceFabric.Actors;
-using ServiceFabric.Demo.EStore.ProductService.Model;
+using ServiceFabric.Demo.EStore.OrderService.Model;
 using ServiceFabric.Demo.EStore.OrderService.Model.Exceptions;
 using ServiceFabric.Demo.EStore.OrderService.Model.Model;
+using ServiceFabric.Demo.EStore.ProductService.Model;
 
 namespace ServiceFabric.Demo.EStore.OrderService
 {
@@ -35,7 +35,7 @@ namespace ServiceFabric.Demo.EStore.OrderService
         {
             var product = await productService.GetProduct(productId);
 
-            if(product == null)
+            if (product == null)
             {
                 throw new ProductNotFoundException();
             }
@@ -53,11 +53,11 @@ namespace ServiceFabric.Demo.EStore.OrderService
 
             var model = new CartModel() { Items = new List<CartItem>() };
 
-            foreach(var productId in cart.Keys)
+            foreach (var productId in cart.Keys)
             {
                 var product = await productService.GetProduct(productId);
 
-                if(product != null)
+                if (product != null)
                 {
                     model.Items.Add(new CartItem()
                     {

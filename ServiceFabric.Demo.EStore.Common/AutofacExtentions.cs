@@ -1,10 +1,10 @@
-﻿using Autofac;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using Autofac;
 using Autofac.Builder;
 using Autofac.Features.Scanning;
 using AutoMapper;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
 
 namespace ServiceFabric.Demo.EStore.Common
 {

@@ -1,17 +1,17 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using System;
+using System.Reflection;
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Autofac;
-using Autofac.Extensions.DependencyInjection;
-using System.Reflection;
+using Microsoft.ServiceFabric.Services.Client;
+using Microsoft.ServiceFabric.Services.Remoting.Client;
+using Newtonsoft.Json.Serialization;
 using ServiceFabric.Demo.EStore.Common;
 using ServiceFabric.Demo.EStore.OrderService.Model;
-using Microsoft.ServiceFabric.Services.Remoting.Client;
 using ServiceFabric.Demo.EStore.ProductService.Model;
-using Microsoft.ServiceFabric.Services.Client;
-using System;
-using Newtonsoft.Json.Serialization;
 using ServiceFabric.Demo.EStore.WebAPI.Services;
 
 namespace ServiceFabric.Demo.EStore.WebAPI
@@ -55,7 +55,6 @@ namespace ServiceFabric.Demo.EStore.WebAPI
 
             // We can easily swtitch to internal implementation
             // builder.RegisterType<DummyProductService>().As<IProductService>();
-
             builder.Populate(services);
 
             var container = builder.Build();

@@ -1,7 +1,7 @@
-﻿using Microsoft.ServiceFabric.Services.Remoting;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.ServiceFabric.Services.Remoting;
 
 namespace ServiceFabric.Demo.EStore.ProductService.Model
 {
@@ -12,6 +12,5 @@ namespace ServiceFabric.Demo.EStore.ProductService.Model
         Task<Product> GetProduct(Guid productId);
 
         Task<Guid> AddProduct(Product product);
-
     }
 }

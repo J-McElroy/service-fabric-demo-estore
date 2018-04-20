@@ -14,13 +14,14 @@ using Microsoft.ServiceFabric.Services.Runtime;
 namespace ServiceFabric.Demo.EStore.WebAPI
 {
     /// <summary>
-    /// The FabricRuntime creates an instance of this class for each service type instance. 
+    /// The FabricRuntime creates an instance of this class for each service type instance.
     /// </summary>
     public class WebAPI : StatelessService
     {
         public WebAPI(StatelessServiceContext context)
             : base(context)
-        { }
+        {
+        }
 
         /// <summary>
         /// Optional override to create listeners (like tcp, http) for this service instance.

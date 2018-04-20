@@ -10,15 +10,18 @@ namespace ServiceFabric.Demo.EStore.OrderService.Model.Exceptions
         {
         }
 
-        public ProductNotFoundException(string message) : base(message)
+        public ProductNotFoundException(string message)
+            : base(message)
         {
         }
 
-        public ProductNotFoundException(string message, Exception inner) : base(message, inner)
+        public ProductNotFoundException(string message, Exception inner)
+            : base(message, inner)
         {
         }
 
-        protected ProductNotFoundException(SerializationInfo info, StreamingContext context) : base(info, context)
+        protected ProductNotFoundException(SerializationInfo info, StreamingContext context)
+            : base(info, context)
         {
         }
     }

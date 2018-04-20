@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Fabric;
 using System.Threading;
 using Autofac;
 using Autofac.Integration.ServiceFabric;
 using ServiceFabric.Demo.EStore.ProductService.Settings;
-using System.Fabric;
 
 namespace ServiceFabric.Demo.EStore.ProductService
 {
@@ -21,7 +21,6 @@ namespace ServiceFabric.Demo.EStore.ProductService
                 // Registering a service maps a service type name to a .NET type.
                 // When Service Fabric creates an instance of this service type,
                 // an instance of the class is created in this host process.
-
                 var builder = new ContainerBuilder();
 
                 builder.RegisterServiceFabricSupport();
